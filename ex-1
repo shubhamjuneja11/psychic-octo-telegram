@@ -1,0 +1,6 @@
+ALTER TABLE TESTING_TABLE 
+DROP COLUMN name,
+CHANGE COLUMN contact_name username VARCHAR(50),
+ADD first_name VARCHAR(50),
+ADD last_name VARCHAR(50),
+MODIFY roll_no INTEGER;
