@@ -1,6 +1,33 @@
-ALTER TABLE TESTING_TABLE 
-DROP COLUMN name,
-CHANGE COLUMN contact_name username VARCHAR(50),
-ADD first_name VARCHAR(50),
-ADD last_name VARCHAR(50),
-MODIFY roll_no INTEGER;
+mysql> CREATE TABLE testing_table( 
+    -> name VARCHAR(50), 
+    -> contact_name VARCHAR(50), 
+    -> roll_no VARCHAR(50) 
+    -> );
+
+mysql> DESC testing_table;
+
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| name         | varchar(50) | YES  |     | NULL    |       |
+| contact_name | varchar(50) | YES  |     | NULL    |       |
+| roll_no      | varchar(50) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+mysql> ALTER TABLE testing_table 
+    -> DROP COLUMN name,
+    -> CHANGE COLUMN contact_name username VARCHAR(50),
+    -> ADD first_name VARCHAR(50),
+    -> ADD last_name VARCHAR(50),
+    -> MODIFY roll_no INTEGER;
+
+mysql> DESC testing_table;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| username   | varchar(50) | YES  |     | NULL    |       |
+| roll_no    | int(11)     | YES  |     | NULL    |       |
+| first_name | varchar(50) | YES  |     | NULL    |       |
+| last_name  | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
