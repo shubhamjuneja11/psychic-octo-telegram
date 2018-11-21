@@ -29,15 +29,26 @@ FROM holdings
 JOIN titles WHERE holdings.title = titles.title 
 AND author = 'Ann Brown';
 
-SELECT branch, 
-sum(copies) 
-FROM holdings 
-GROUP BY branch;
++--------+
+| branch |
++--------+
+| B1     |
+| B3     |
+| B2     |
++--------+
+
+SELECT bcode AS Branch,
+COALESCE(SUM(copies),0) AS Books_Count
+FROM branch 
+LEFT JOIN holdings ON branch.bcode = holdings.branch 
+GROUP BY bcode;
 
 +--------+-------------+
-| branch | sum(copies) |
+| Branch | Books_Count |
 +--------+-------------+
 | B1     |           6 |
 | B2     |           9 |
 | B3     |           9 |
+| B4     |           0 |
 +--------+-------------+
+
