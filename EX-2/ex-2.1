@@ -29,7 +29,7 @@ AND name = 'Jones';
 SELECT location, 
 COUNT(DISTINCT(name)) AS count
 FROM tastes 
-JOIN sandwiches WHERE tastes.filling = sandwiches.filling 
+RIGHT JOIN sandwiches WHERE tastes.filling = sandwiches.filling 
 GROUP BY location;
 
 +-----------+-------+
