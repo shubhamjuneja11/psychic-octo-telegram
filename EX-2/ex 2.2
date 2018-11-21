@@ -1,0 +1,43 @@
+SELECT title 
+FROM titles 
+WHERE Publisher = 'Macmillan';
+
++----------+
+| title    |
++----------+
+| Susannah |
+| The Wife |
++----------+
+
+SELECT DISTINCT(branch) 
+FROM holdings 
+WHERE title IN(
+SELECT title FROM titles WHERE author = 'Ann Brown'
+);
+
++--------+
+| branch |
++--------+
+| B1     |
+| B3     |
+| B2     |
++--------+
+
+
+SELECT DISTINCT(branch)  
+FROM holdings 
+JOIN titles WHERE holdings.title = titles.title 
+AND author = 'Ann Brown';
+
+SELECT branch, 
+sum(copies) 
+FROM holdings 
+GROUP BY branch;
+
++--------+-------------+
+| branch | sum(copies) |
++--------+-------------+
+| B1     |           6 |
+| B2     |           9 |
+| B3     |           9 |
++--------+-------------+

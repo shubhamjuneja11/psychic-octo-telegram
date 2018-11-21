@@ -1,0 +1,44 @@
+SELECT location 
+FROM sandwiches 
+WHERE filling IN(
+SELECT filling 
+FROM tastes 
+WHERE name = 'Jones');
+
++-----------+
+| location  |
++-----------+
+| Buttery   |
+| O'Neill's |
++-----------+
+
+
+SELECT location 
+FROM sandwiches 
+JOIN tastes WHERE sandwiches.filling = tastes.filling 
+AND name = 'Jones';
+
++-----------+
+| location  |
++-----------+
+| Buttery   |
+| O'Neill's |
++-----------+
+
+
+SELECT location, 
+COUNT(DISTINCT(name)) AS count
+FROM tastes 
+JOIN sandwiches WHERE tastes.filling = sandwiches.filling 
+GROUP BY location;
+
++-----------+-------+
+| location  | count |
++-----------+-------+
+| Buttery   |     3 |
+| Lincoln   |     2 |
+| O'Neill's |     3 |
+| Old Nag   |     2 |
++-----------+-------+
+
+
