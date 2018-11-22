@@ -1,4 +1,4 @@
 CREATE DATABASE vtapp;
-GRANT ALL ON vtapp 
-TO 'vtapp_user' 
-IDENTIFIED BY 'password';
+CREATE USER 'vtapp_user'@localhost IDENTIFIED BY 'password';
+GRANT SELECT ON vtapp.* 
+TO 'vtapp_user';
