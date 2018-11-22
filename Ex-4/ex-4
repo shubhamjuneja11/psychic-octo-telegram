@@ -1,0 +1,88 @@
+/*select all articles whose author's name is user3 (Do this exercise using variable also).*/
+
+SELECT article.id,
+article.title
+FROM article
+JOIN article_user ON article.id = article_user.article_id
+JOIN user ON user.id = article_user.author_id
+WHERE user.name = 'user3';
+
+SET @name = 'user3';
+SELECT article.id,
+article.title
+FROM article
+JOIN article_user ON article.id = article_user.article_id
+JOIN user ON user.id = article_user.author_id
+WHERE user.name = @name;
+
+
+
+
+
+
+/*For all the articles being selected above, select all the articles and also the comments associated with those articles in a single query (Do this using subquery also)*/
+
+SELECT article.id,
+article.title,
+comments.comment
+FROM article
+LEFT JOIN comments ON article.id = comments.article_id
+JOIN article_user ON article.id = article_user.article_id
+JOIN user ON article_user.author_id=user.id
+WHERE user.name='user3';
+
+SELECT article.id,
+article.title,
+comments.comment
+FROM article
+LEFT JOIN comments ON article.id = comments.article_id
+HAVING article.id IN (
+SELECT article_user.article_id
+FROM user
+JOIN article_user ON user.id = article_user.author_id
+AND user.name='user3'
+);
+
+
+
+
+
+/*Write a query to select all articles which do not have any comments (Do using subquery also)*/
+
+SELECT article.title
+FROM article
+LEFT JOIN comments ON article.id=comments.article_id
+WHERE comments.id IS NULL;
+
+SELECT title
+FROM article
+WHERE id NOT IN(
+SELECT distinct(article_id)
+FROM comments
+);
+
+
+
+
+
+/*Write a query to select article which has maximum comments*/
+
+SELECT article.title,
+COUNT(article.id)
+FROM article
+JOIN comments ON article.id = comments.article_id
+GROUP BY article.id
+ORDER BY COUNT(article.id)
+DESC limit 1;
+
+
+
+
+
+/*Write a query to select article which does not have more than one comment by the same user ( do this using left join and group by )*/
+
+SELECT article.title
+FROM article
+JOIN comments ON article.id=comments.article_id
+GROUP BY article.id
+HAVING COUNT(comments.user_id) = COUNT(distinct(comments.user_id));
