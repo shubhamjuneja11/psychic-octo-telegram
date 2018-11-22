@@ -1,0 +1,24 @@
+START TRANSACTION;
+UPDATE accounts
+JOIN users ON users.account_no = accounts.account_no
+SET accounts.balance = accounts.balance + 1000
+WHERE users.name = 'A';
+COMMIT;
+
+START TRANSACTION;
+UPDATE accounts JOIN users ON accounts.account_no = users.account_no
+SET accounts.balance = accounts.balance - 500
+WHERE users.name = 'B';
+COMMIT;
+
+START TRANSACTION;
+UPDATE accounts
+JOIN users ON accounts.account_no = users.account_no
+SET accounts.balance = accounts.balance-200
+WHERE users.name = 'A';
+
+UPDATE accounts
+JOIN users ON accounts.account_no = users.account_no
+SET accounts.balance = accounts.balance + 200
+WHERE users.name = 'B';
+COMMIT;
