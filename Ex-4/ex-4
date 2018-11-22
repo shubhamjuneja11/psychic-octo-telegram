@@ -83,6 +83,6 @@ DESC limit 1;
 
 SELECT article.title
 FROM article
-JOIN comments ON article.id=comments.article_id
+LEFT JOIN comments ON article.id=comments.article_id
 GROUP BY article.id
-HAVING COUNT(comments.user_id) = COUNT(distinct(comments.user_id));
+HAVING COUNT(comments.user_id) = COUNT(DISTINCT comments.user_id);
