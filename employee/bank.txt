@@ -1,0 +1,38 @@
+SELECT employees.id,
+employees.name,
+SUM(commissions.commission_amount)
+FROM employees
+JOIN commissions ON employees.id = commissions.employee_id
+GROUP BY employees.id
+ORDER BY SUM(commissions.commission_amount)
+DESC LIMIT 1;
+
+SELECT id,
+name,
+salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 3,1;
+
+SELECT departments.id,
+departments.name,
+SUM(commissions.commission_amount)
+FROM employees
+JOIN commissions ON employees.id = commissions.employee_id
+JOIN departments ON departments.id=employees.department_id
+GROUP BY employees.department_id
+ORDER BY SUM(commissions.commission_amount)
+DESC LIMIT 1;
+
+SELECT GROUP_CONCAT(employees.name),
+sum_table.com_sum
+FROM employees
+JOIN (
+SELECT employee_id,
+SUM(commission_amount) AS com_sum
+FROM commissions
+GROUP BY employee_id
+) sum_table
+ON employees.id = sum_table.employee_id
+GROUP BY sum_table.com_sum
+HAVING sum_table.com_sum > 3000;
