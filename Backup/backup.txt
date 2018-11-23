@@ -1,4 +1,8 @@
 mysqldump --flush-logs --databases -u root -p blogdb > blogdb.sql;
-mysql -u root -p < blogdb.sql;
+
+
+CREATE DATABASE restored;
+use restored;
+source blogdb.sql;
 
 
