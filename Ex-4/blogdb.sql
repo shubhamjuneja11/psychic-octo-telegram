@@ -16,34 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `article`
---
-
-DROP TABLE IF EXISTS `article`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `article` (
-  `id` int(11) NOT NULL,
-  `title` varchar(50) DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `content` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category_id` (`category_id`),
-  CONSTRAINT `article_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `article`
---
-
-LOCK TABLES `article` WRITE;
-/*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'Ruby',1,'dwddwddd'),(2,'XX',2,'dwddwddd'),(3,'YY',3,'dwedfefeffefddwddd'),(4,'ZOO',3,'ddddwdwd'),(6,'hhh',1,'rgg');
-/*!40000 ALTER TABLE `article` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `article_user`
 --
 
@@ -55,8 +27,8 @@ CREATE TABLE `article_user` (
   `author_id` int(11) NOT NULL,
   PRIMARY KEY (`article_id`,`author_id`),
   KEY `user_id` (`author_id`),
-  CONSTRAINT `article_user_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`),
-  CONSTRAINT `article_user_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `article_user_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `article_user_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -68,6 +40,34 @@ LOCK TABLES `article_user` WRITE;
 /*!40000 ALTER TABLE `article_user` DISABLE KEYS */;
 INSERT INTO `article_user` VALUES (1,1),(6,1),(1,2),(2,2),(3,3),(1,4),(2,4);
 /*!40000 ALTER TABLE `article_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `articles`
+--
+
+DROP TABLE IF EXISTS `articles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `articles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `content` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `articles`
+--
+
+LOCK TABLES `articles` WRITE;
+/*!40000 ALTER TABLE `articles` DISABLE KEYS */;
+INSERT INTO `articles` VALUES (1,'Ruby',1,'dwddwddd'),(2,'XX',2,'dwddwddd'),(3,'YY',3,'dwedfefeffefddwddd'),(4,'ZOO',3,'ddddwdwd'),(6,'hhh',1,'rgg');
+/*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -105,12 +105,12 @@ CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `article_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `comment` varchar(200) DEFAULT NULL,
+  `content` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `article_id` (`article_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`),
-  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-22 14:06:57
+-- Dump completed on 2018-11-23 18:09:06
