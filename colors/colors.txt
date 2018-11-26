@@ -1,0 +1,41 @@
+/****1******/
+SELECT second.name AS combine_with,
+third.name AS resulting_color
+FROM mixtures
+JOIN colors ON (colors.name = 'Red' and (colors.id = mixtures.parent1_id or colors.id = mixtures.parent2_id))
+JOIN colors AS second ON ((mixtures.parent1_id = second.id and mixtures.parent2_id=colors.id) or (mixtures.parent2_id = second.id and mixtures.parent1_id=colors.id))
+JOIN colors AS third ON(third.id = mixtures.mix_id);
+
+/****2****/
+SELECT second_colors.name
+FROM mixtures
+JOIN colors ON colors.name = 'Red'
+JOIN colors AS second_colors ON mixtures.mix_id = second_colors.id
+WHERE mixtures.parent1_id<>colors.id and mixtures.parent2_id <> colors.id;
+
+
+
+/*****3*****/
+SELECT colors.name,
+GROUP_CONCAT(second_color.name separator ' & ')
+FROM colors
+JOIN mixtures ON (colors.id = parent1_id or colors.id = parent2_id)
+JOIN colors AS second_color ON mixtures.mix_id = second_color.id
+GROUP BY colors.name;
+
+
+/****4******/
+
+SELECT CONCAT(parent1_id,' & ',parent2_id) AS parent_colors,
+mix_id,
+mix_density,
+density
+FROM mixtures
+JOIN colors ON mixtures.mix_id = colors.id
+WHERE mix_density >= density;
+
+
+/***5*****/
+SELECT sum(if(parent1_id=colors.id,parent1_perc,parent2_perc))/100 AS amount
+FROM mixtures
+JOIN colors ON (colors.name = 'Red' and (colors.id = mixtures.parent1_id or colors.id = mixtures.parent2_id));
