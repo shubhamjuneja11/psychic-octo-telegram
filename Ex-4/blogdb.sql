@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: blogdb
 -- ------------------------------------------------------
--- Server version	5.7.24-0ubuntu0.16.04.1
+-- Server version	5.7.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `article_user`
+-- Table structure for table `article_users`
 --
 
-DROP TABLE IF EXISTS `article_user`;
+DROP TABLE IF EXISTS `article_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `article_user` (
+CREATE TABLE `article_users` (
   `article_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  PRIMARY KEY (`article_id`,`author_id`),
-  KEY `user_id` (`author_id`),
-  CONSTRAINT `article_user_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `article_user_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`article_id`,`user_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `article_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `article_users_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `article_user`
+-- Dumping data for table `article_users`
 --
 
-LOCK TABLES `article_user` WRITE;
-/*!40000 ALTER TABLE `article_user` DISABLE KEYS */;
-INSERT INTO `article_user` VALUES (1,1),(6,1),(1,2),(2,2),(3,3),(1,4),(2,4);
-/*!40000 ALTER TABLE `article_user` ENABLE KEYS */;
+LOCK TABLES `article_users` WRITE;
+/*!40000 ALTER TABLE `article_users` DISABLE KEYS */;
+INSERT INTO `article_users` VALUES (1,1),(6,1),(1,2),(2,2),(3,3),(1,4),(2,4);
+/*!40000 ALTER TABLE `article_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -158,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-23 18:09:06
+-- Dump completed on 2018-11-27 14:19:46

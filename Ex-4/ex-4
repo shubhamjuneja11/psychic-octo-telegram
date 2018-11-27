@@ -3,16 +3,16 @@
 SELECT articles.id,
 articles.title
 FROM articles
-JOIN article_user ON articles.id = article_user.article_id
-JOIN user ON user.id = article_user.author_id
+JOIN article_users ON articles.id = article_users.article_id
+JOIN user ON user.id = article_users.user_id
 WHERE user.name = 'user3';
 
 SET @name = 'user3';
 SELECT articles.id,
 articles.title
 FROM articles
-JOIN article_user ON articles.id = article_user.article_id
-JOIN user ON user.id = article_user.author_id
+JOIN article_users ON articles.id = article_users.article_id
+JOIN user ON user.id = article_users.user_id
 WHERE user.name = @name;
 
 
@@ -27,8 +27,8 @@ articles.title,
 comments.content
 FROM articles
 LEFT JOIN comments ON articles.id = comments.article_id
-JOIN article_user ON articles.id = article_user.article_id
-JOIN user ON article_user.author_id=user.id
+JOIN article_users ON articles.id = article_users.article_id
+JOIN user ON article_users.user_id=user.id
 WHERE user.name='user3';
 
 SELECT articles.id,
@@ -37,9 +37,9 @@ comments.content
 FROM articles
 LEFT JOIN comments ON articles.id = comments.article_id
 HAVING articles.id IN (
-SELECT article_user.article_id
+SELECT article_users.article_id
 FROM user
-JOIN article_user ON user.id = article_user.author_id
+JOIN article_users ON user.id = article_users.user_id
 AND user.name='user3'
 );
 
