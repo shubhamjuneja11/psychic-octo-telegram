@@ -6,6 +6,17 @@ JOIN colors ON (colors.name = 'Red' and (colors.id = mixtures.parent1_id or colo
 JOIN colors AS second ON ((mixtures.parent1_id = second.id and mixtures.parent2_id=colors.id) or (mixtures.parent2_id = second.id and mixtures.parent1_id=colors.id))
 JOIN colors AS third ON(third.id = mixtures.mix_id);
 
+
++--------------+-----------------+
+| combine_with | resulting_color |
++--------------+-----------------+
+| Green        | Yellow          |
+| Blue         | Pink            |
+| Yellow       | White           |
+| Yellow       | Blue            |
++--------------+-----------------+
+
+
 /****2****/
 SELECT second_colors.name
 FROM mixtures
@@ -13,15 +24,30 @@ JOIN colors ON colors.name = 'Red'
 JOIN colors AS second_colors ON mixtures.mix_id = second_colors.id
 WHERE mixtures.parent1_id<>colors.id and mixtures.parent2_id <> colors.id;
 
++------+
+| name |
++------+
+| Cyan |
++------+
+
 
 
 /*****3*****/
 SELECT colors.name,
-GROUP_CONCAT(second_color.name separator ' & ')
+GROUP_CONCAT(second_color.name separator ' & ') as possible_mixture
 FROM colors
 JOIN mixtures ON (colors.id = parent1_id or colors.id = parent2_id)
 JOIN colors AS second_color ON mixtures.mix_id = second_color.id
 GROUP BY colors.name;
+
++--------+------------------------------+
+| name   | possible_mixture             |
++--------+------------------------------+
+| Blue   | Cyan & Pink                  |
+| Green  | Yellow & Cyan                |
+| Red    | Pink & Yellow & Blue & White |
+| Yellow | White & Blue                 |
++--------+------------------------------+
 
 
 /****4******/
@@ -34,8 +60,25 @@ FROM mixtures
 JOIN colors ON mixtures.mix_id = colors.id
 WHERE mix_density >= density;
 
++---------------+--------+-------------+---------+
+| parent_colors | mix_id | mix_density | density |
++---------------+--------+-------------+---------+
+| 10 & 11       |     13 |         0.6 |     0.2 |
+| 10 & 12       |     14 |         0.5 |     0.3 |
+| 11 & 12       |     15 |        0.75 |     0.4 |
+| 10 & 13       |     16 |        0.28 |    0.28 |
+| 13 & 10       |     12 |        0.45 |     0.4 |
++---------------+--------+-------------+---------+
+
 
 /***5*****/
 SELECT sum(if(parent1_id=colors.id,parent1_perc,parent2_perc))/100 AS amount
 FROM mixtures
 JOIN colors ON (colors.name = 'Red' and (colors.id = mixtures.parent1_id or colors.id = mixtures.parent2_id));
+
++--------+
+| amount |
++--------+
+| 2.5000 |
++--------+
+
