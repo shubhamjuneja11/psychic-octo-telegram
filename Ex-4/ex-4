@@ -4,16 +4,16 @@ SELECT articles.id,
 articles.title
 FROM articles
 JOIN article_users ON articles.id = article_users.article_id
-JOIN user ON user.id = article_users.user_id
-WHERE user.name = 'user3';
+JOIN users ON users.id = article_users.user_id
+WHERE users.name = 'user3';
 
 SET @name = 'user3';
 SELECT articles.id,
 articles.title
 FROM articles
 JOIN article_users ON articles.id = article_users.article_id
-JOIN user ON user.id = article_users.user_id
-WHERE user.name = @name;
+JOIN users ON users.id = article_users.user_id
+WHERE users.name = @name;
 
 
 
@@ -28,8 +28,8 @@ comments.content
 FROM articles
 LEFT JOIN comments ON articles.id = comments.article_id
 JOIN article_users ON articles.id = article_users.article_id
-JOIN user ON article_users.user_id=user.id
-WHERE user.name='user3';
+JOIN users ON article_users.user_id=users.id
+WHERE users.name='user3';
 
 SELECT articles.id,
 articles.title,
@@ -38,9 +38,9 @@ FROM articles
 LEFT JOIN comments ON articles.id = comments.article_id
 HAVING articles.id IN (
 SELECT article_users.article_id
-FROM user
-JOIN article_users ON user.id = article_users.user_id
-AND user.name='user3'
+FROM users
+JOIN article_users ON users.id = article_users.user_id
+AND users.name='user3'
 );
 
 
@@ -79,7 +79,7 @@ FROM comments
 
 
 
-/*Write a query to select articles which does not have more than one content by the same user ( do this using left join and group by )*/
+/*Write a query to select articles which does not have more than one content by the same users ( do this using left join and group by )*/
 
 SELECT articles.title
 FROM articles

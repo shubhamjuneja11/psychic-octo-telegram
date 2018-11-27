@@ -27,8 +27,8 @@ CREATE TABLE `article_users` (
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`article_id`,`user_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `article_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `article_users_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
+  CONSTRAINT `article_users_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
+  CONSTRAINT `article_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,7 +56,7 @@ CREATE TABLE `articles` (
   `content` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
-  CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+  CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -71,27 +71,27 @@ INSERT INTO `articles` VALUES (1,'Ruby',1,'dwddwddd'),(2,'XX',2,'dwddwddd'),(3,'
 UNLOCK TABLES;
 
 --
--- Table structure for table `category`
+-- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `category`;
+DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `category`
+-- Dumping data for table `categories`
 --
 
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Programming'),(2,'AD'),(3,'BD');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Programming'),(2,'AD'),(3,'BD');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -102,16 +102,17 @@ DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comments` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `article_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `content` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `article_id` (`article_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
+  CONSTRAINT `comments_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `comments_ibfk_5` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,28 +126,28 @@ INSERT INTO `comments` VALUES (1,1,2,'Hello'),(2,3,2,'Hi'),(3,2,1,'yes'),(4,1,2,
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `type` enum('A','N') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Shubham','A'),(2,'Raghav','N'),(3,'Sid','N'),(4,'user3','N');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Shubham','A'),(2,'Raghav','N'),(3,'Sid','N'),(4,'user3','N');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -158,4 +159,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-27 14:19:46
+-- Dump completed on 2018-11-27 18:22:44
