@@ -1,43 +1,43 @@
 /********1***************/
-SELECT salespersON.id,
-salespersON.name
+SELECT salesperson.id,
+salesperson.name
 FROM customer
 JOIN orders ON customer.id = orders.cust_id
-JOIN salespersON ON salespersON.id = orders.salespersON_id
-WHERE customer.name = 'SamsONic';
+JOIN salesperson ON salesperson.id = orders.salesperson_id
+WHERE customer.name = 'Samsonic';
 
 /*********2*****************/
-SELECT salespersON.id,
-salespersON.name
-FROM salespersON
-JOIN orders ON salespersON.id = orders.salespersON_id
-GROUP BY salespersON.id
-having(count(salespersON.id)>1);
+SELECT salesperson.id,
+salesperson.name
+FROM salesperson
+JOIN orders ON salesperson.id = orders.salesperson_id
+GROUP BY salesperson.id
+having(count(salesperson.id)>1);
 
 /*********3***************/
-SELECT salespersON.name,
+SELECT salesperson.name,
 c.*
 FROM orders as a
-left JOIN orders as b ON (a.salespersON_id=b.salespersON_id AND a.order_date>b.order_date )
-JOIN orders as c ON a.salespersON_id=c.salespersON_id
-JOIN salespersON ON c.salespersON_id = salespersON.id
+left JOIN orders as b ON (a.salesperson_id=b.salesperson_id AND a.order_date>b.order_date )
+JOIN orders as c ON a.salesperson_id=c.salesperson_id
+JOIN salesperson ON c.salesperson_id = salesperson.id
 WHERE b.cust_id is NULL AND datediff(a.order_date,'2013-02-11')<15;
 
 /*****4***/
-SELECT salespersON.id,
-salespersON.name,
+SELECT salesperson.id,
+salesperson.name,
 first_order.amount
 FROM orders as first_order
-left JOIN orders as secONd_order ON first_order.amount < secONd_order.amount
-JOIN salespersON ON salespersON.id = first_order.salespersON_id
-WHERE secONd_order.amount is null;
+left JOIN orders as second_order ON first_order.amount < second_order.amount
+JOIN salesperson ON salesperson.id = first_order.salesperson_id
+WHERE second_order.amount is null;
 
 /**5**/
-SELECT salespersON.name,
-GROUP CONCAT(DISTINCT customer.industry_type)
-FROM salespersON JOIN orders ON salespersON.id = orders.salespersON_id
-JOIN customer ON orders.cust_id = customer.id GROUP BY salespersON.id;
+SELECT salesperson.name,
+GROUP ConCAT(DISTINCT customer.industry_type)
+FROM salesperson JOIN orders ON salesperson.id = orders.salesperson_id
+JOIN customer ON orders.cust_id = customer.id GROUP BY salesperson.id;
 
 /**6**/
-SELECT count(DISTINCT salespersON_id)
+SELECT count(DISTINCT salesperson_id)
 FROM orders;
